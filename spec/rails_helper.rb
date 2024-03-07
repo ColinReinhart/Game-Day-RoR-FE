@@ -1,3 +1,5 @@
+require 'simplecov'
+  SimpleCov.start
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 require 'spec_helper'
 ENV['RAILS_ENV'] ||= 'test'
@@ -28,6 +30,7 @@ begin
   ActiveRecord::Migration.maintain_test_schema!
 rescue ActiveRecord::PendingMigrationError => e
   abort e.to_s.strip
+  exit 1
 end
 RSpec.configure do |config|
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
@@ -60,4 +63,68 @@ RSpec.configure do |config|
   config.filter_rails_from_backtrace!
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
+end
+Shoulda::Matchers.configure do |config|
+  config.integrate do |with|
+    with.test_framework :rspec
+    with.library :rails
+  end
+end
+
+OmniAuth.config.test_mode = true
+OmniAuth.config.silence_get_warning = true
+OmniAuth.config.mock_auth[:google_oauth2] = OmniAuth::AuthHash.new(
+{
+  :provider => "google_oauth2",
+  :uid => "123456789",
+  :info => {
+    :name => "John Doe",
+    :email => "john.doe@example.com",
+    :first_name => "John",
+    :last_name => "Doe",
+    :image => "https://lh3.googleusercontent.com/url/photo.jpg"
+  },
+  :credentials => {
+      :token => "token",
+      :refresh_token => "another_token",
+      :expires_at => 1354920555,
+      :expires => true
+  },
+  :extra => {
+    :raw_info => {
+      :sub => "123456789",
+      :email => "john.doe@example.com",
+      :email_verified => true,
+      :name => "John Doe",
+      :given_name => "John",
+      :family_name => "Doe",
+      :profile => "https://plus.google.com/123456789",
+      :picture => "https://lh3.googleusercontent.com/url/photo.jpg",
+      :gender => "male",
+      :birthday => "0000-06-25",
+      :locale => "en",
+      :hd => "example.com"
+    },
+    :id_info => {
+      "iss" => "accounts.google.com",
+      "at_hash" => "HK6E_P6Dh8Y93mRNtsDB1Q",
+      "email_verified" => "true",
+      "sub" => "10769150350006150715113082367",
+      "azp" => "APP_ID",
+      "email" => "jsmith@example.com",
+      "aud" => "APP_ID",
+      "iat" => 1353601026,
+      "exp" => 1353604926,
+      "openid_id" => "https://www.google.com/accounts/o8/id?id=ABCdfdswawerSDFDsfdsfdfjdsf"
+    }
+  }
+})
+#
+# Rails.application.env_config['omniauth.auth'] = OmniAuth.config.mock_auth[:google_oauth2]
+
+VCR.configure do |config|
+  config.cassette_library_dir = 'spec/fixtures/vcr_cassettes'
+  config.hook_into :webmock
+  config.filter_sensitive_data('tmdb_key') { ENV['tmdb_key'] }
+  config.configure_rspec_metadata!
 end
