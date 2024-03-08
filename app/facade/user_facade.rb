@@ -2,7 +2,7 @@ class UserFacade
 
   def self.find_create_user(info)
     attributes = UserService.create_user(info)
-    User.new(attributes[:data])
+    User.new(attributes)
   end
 
   def self.all_users

@@ -5,6 +5,6 @@ class BaseService
   end
 
   def self.get_json(response)
-    JSON.parse(response.body, symbolize_names: true)
+    JSON.parse(response.env.request_body, symbolize_names: true)
   end
 end

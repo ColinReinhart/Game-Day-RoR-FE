@@ -8,6 +8,7 @@ class UsersController < ApplicationController
     session[:access_token] = auth[:credentials][:token]
     user = UserFacade.find_create_user(auth[:info])
     session[:user_id] = user.id
+    require 'pry'; binding.pry
     redirect_to '/'
   end
 end
