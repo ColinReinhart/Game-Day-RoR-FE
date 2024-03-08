@@ -5,7 +5,6 @@ class UsersController < ApplicationController
 
   def create
     auth = request.env["omniauth.auth"]
-    require 'pry'; binding.pry
     session[:access_token] = auth[:credentials][:token]
     user = UserFacade.find_create_user(auth[:info])
     session[:user_id] = user.id
