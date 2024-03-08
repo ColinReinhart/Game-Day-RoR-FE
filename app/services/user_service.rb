@@ -1,7 +1,7 @@
 class UserService < BaseService
 
   def self.users
-    response = conn.get("/api/v1/users")
+    response = conn.get("graphql")
     get_json(response)
   end
 
@@ -11,7 +11,7 @@ class UserService < BaseService
   end
 
   def self.create_user(data)
-    response = conn.post("/api/v1/users/register", {
+    response = conn.post("/graphql", {
       email: data[:email],
       username: data[:name]
     }.to_json, "Content-Type" => "application/json")
