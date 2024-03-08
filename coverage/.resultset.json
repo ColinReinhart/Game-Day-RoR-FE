@@ -247,7 +247,6 @@
           1,
           1,
           1,
-          1,
           0,
           0,
           null,
@@ -281,27 +280,42 @@
         "lines": [
           1,
           null,
-          0,
-          0,
-          0,
-          null,
-          null,
-          0,
+          1,
           0,
           0,
           null,
           null,
+          1,
           0,
           0,
           null,
           null,
+          1,
+          1,
           null,
+          null,
+          null,
+          1,
+          null,
+          null
+        ]
+      },
+      "/Users/colinreinhart/turing/5Module/projects/game_day_gambit_ror_fe/app/services/base_service.rb": {
+        "lines": [
+          1,
+          null,
+          1,
+          1,
+          null,
+          null,
+          1,
+          1,
           0,
           null,
           null
         ]
       }
     },
-    "timestamp": 1709847784
+    "timestamp": 1709919032
   }
 }

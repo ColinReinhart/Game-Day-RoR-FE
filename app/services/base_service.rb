@@ -1,7 +1,7 @@
 class BaseService
 
   def self.conn
-    Faraday.new("https://history-maps-be.herokuapp.com")
+    Faraday.new("https://game-day-gambit-be-35b7.onrender.com")
   end
 
   def self.get_json(response)
